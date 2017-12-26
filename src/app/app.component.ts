@@ -39,12 +39,11 @@ export class AppComponent implements AfterViewInit {
     	jQuery("#f_serial",$form).mask("9999 9999 9999 9999",{placeholder:"0000 0000 0000 0000"});
     }
 
-    getFormValidationMessages(): string[] {
+    getFormValidationMessages(): {} {
         let form=this.exchange_form;
-        console.log(form);
-        let messages: string[] = [];
+        let messages = {};
         Object.keys(form.controls).forEach(k => {
-            this.exchange_form.getValidationMessages(form.controls[k], k).forEach(m => messages.push(m));
+            this.exchange_form.getValidationMessages(form.controls[k], k).forEach(m => messages[k]=m);
         });
         return messages;
     }
@@ -52,11 +51,11 @@ export class AppComponent implements AfterViewInit {
 
     submitForm() {
         let form=this.exchange_form;
-        this.formSubmitted = true;
+        form.formSubmitted = true;
         if (form.valid) {
             console.log(form);
             form.reset();
-            this.formSubmitted = false;
+            form.formSubmitted = false;
         }
     }
 }

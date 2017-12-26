@@ -10,17 +10,13 @@
     <h1>Buy bitcoins with a credit or debit card</h1>
 </div>
 <div class="right">
-<form method="POST" novalidate [formGroup]="exchange_form" #exchange_form_jquery #form="ngForm"  (ngSubmit)="submitForm(form)">
+<form method="POST" novalidate [formGroup]="exchange_form" #exchange_form_jquery  (ngSubmit)="submitForm(form)">
 <input type="hidden" name="type" value="exchange">
 <input type="hidden" name="action" value="validate">
-	<div class="bg-danger p-a-1 m-b-1" *ngIf="formSubmitted && form.invalid"> There are problems with the form
-		<ul>
-            <li *ngFor="let error of getFormValidationMessages(form)">
-                {{error}}
-			</li> </ul>
-	</div>
+	
     <table class="pay">
 	<tr>
+		<td class="validate"><span *ngIf="exchange_form.controls['amount_give'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['amount_give']}}</span></td>
 	    <td class="h1">You pay</td><td class="inp inp_long">
 		<select name="give">
 		    <option value="USD" >Credit/Debit cards (USD)</option>
@@ -31,6 +27,7 @@
 	    </td><td><span id="give_currency">USD</span></td>
 	</tr>
 	<tr>
+		<td class="validate"><span *ngIf="exchange_form.controls['amount_receive'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['amount_receive']}}</span></td>
 	    <td class="h1">You receive</td><td class="inp">
 		<select name="receive">
 		    <option value="BTC" >Bitcoin</option>
@@ -44,53 +41,64 @@
 	</tr>
 	<tr><td>&#160;</td><td colspan="3" class="small"></td></tr>
 	<tr>
+		<td class="validate"><span *ngIf="exchange_form.controls['email'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['email']}}</span></td>
 	    <td class="h2">Email</td>
 	    <td class="inp" colspan="3"><input type="text" name="email"  value="" formControlName="email">
 		</td>
 	</tr>
 	<tr>
+		<td class="validate"><span *ngIf="exchange_form.controls['phone'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['phone']}}</span></td>
 	    <td class="h2">Mobile phone</td>
 	    <td class="inp" colspan="3"><input type="text" name="phone" placeholder="+X (XXX) XXX-XX-XX" value="" id="f_phone" formControlName="phone">
 	    </td>
 	</tr>
-		<tr>
+	<tr>
+		<td class="validate"><span *ngIf="exchange_form.controls['date'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['date']}}</span></td>
 	    <td class="h2">Birthday</td>
 	    <td class="inp" colspan="3"><input type="text" name="date" placeholder="MM/DD/YYYY" value="" id="f_date" formControlName="date">
 		</td>
 	</tr>
 	<tr>
+		<td class="validate"><span *ngIf="exchange_form.controls['address'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['address']}}</span>
 	    <td class="h2">Your bitcoin address</td>
-	    <td class="inp" colspan="3"><input type="text" name="address"  value=""></td>
+	    <td class="inp" colspan="3"><input type="text" name="address"  value="" formControlName="address"></td>
 	</tr>
 	<tr>
+		<td class="validate">
+			<span *ngIf="exchange_form.controls['serial'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['serial']}}</span>
+			<span *ngIf="exchange_form.controls['month'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['month']}}</span>
+			<span *ngIf="exchange_form.controls['year'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['year']}}</span>
+			<span *ngIf="exchange_form.controls['cardholder'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['cardholder']}}</span>
+			<span *ngIf="exchange_form.controls['code'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['code']}}</span>
+		</td>
 	    <td colspan="3">
 		<div id="cards">
-		<form class="card-info__cards">
+		<div class="card-info__cards">
 		    <div class="card-info__card card-info__front">
 			<div class="card-info__bank-logo-wrap">
 			    <a class="card-info__bank-logo-link" href="#"><img class="card-info__bank-logo" alt="" src=""/></a>
 			</div>
 			<div class="card-info__type-logo-wrap"><img class="card-info__type-logo" id="card_logo" alt="" src="/i/master-card-colored.svg"/></div>
 			<div class="card-info__front-fields">
-			    <input class="card-info__field card-info__field-number" type="text" placeholder="0000 0000 0000 0000" name="serial" value="" id="f_serial" />
+			    <input class="card-info__field card-info__field-number" type="text" placeholder="0000 0000 0000 0000" name="serial" value="" id="f_serial" formControlName="serial" />
 			    <label class="card-info__label card-info__label-expired">Valid Thru:</label>
-			    <input class="card-info__field card-info__field-expired card-info__field-mm" type="text" placeholder="MM" name="month"  value="" id="f_month"/>
-			    <input class="card-info__field card-info__field-expired card-info__field-yy" type="text" placeholder="YY" name="year" style="clear:right;"  value="" id="f_year"/>
-			    			    <input class="card-info__field card-info__field-name" type="text" placeholder="Cardholder name" name="cardholder"  value=""/>
+			    <input class="card-info__field card-info__field-expired card-info__field-mm" type="text" placeholder="MM" name="month"  value="" id="f_month" formControlName="month" />
+			    <input class="card-info__field card-info__field-expired card-info__field-yy" type="text" placeholder="YY" name="year" style="clear:right;"  value="" id="f_year" formControlName="year" />
+			    			    <input class="card-info__field card-info__field-name" type="text" placeholder="Cardholder name" name="cardholder"  value="" formControlName="cardholder" />
 			</div>
 		    </div>
 		    <div class="card-info__card card-info__back">
 			<div class="card-info__back-line"></div>
 			<div class="card-info__back-fields">
-			    <input class="card-info__field card-info__field-code" type="password" id="card_code" placeholder="CVC" name="code"  value="" />
+			    <input class="card-info__field card-info__field-code" type="password" id="card_code" placeholder="CVC" name="code"  value="" formControlName="code" />
 			    <label class="card-info__label card-info__label-code" id="code_desc">CVC code</label>
 			</div>
 		    </div>
-		</form>
+		</div>
 		</div>
 	    </td>
 	</tr>
-	<tr><td colspan="4" class="btn"><input type="submit" value="Buy bitcoins now" [disabled]="formSubmitted && form.invalid" [class.btn-secondary]="formSubmitted && form.invalid"></td></tr>
+	<tr><td colspan="4" class="btn"><input type="submit" value="Buy bitcoins now" [disabled]="exchange_form.formSubmitted && exchange_form.invalid" [class.disabled]="exchange_form.formSubmitted && exchange_form.invalid"></td></tr>
     </table>
 </form>
 </div>
@@ -103,7 +111,7 @@
 </menu>
 <div class="copyright">
 © 2017 Squirrel Tree<br>
-Building 2017, Anonimouse street, StarCity, Neverland<br>
+Building 2017, Anonimous street, StarCity, Neverland<br>
 Company Number SL01042017
 </div>
 </footer>

@@ -1,9 +1,11 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { validatePhone } from '../phone.validator';
+import { validatePhone } from './phone.validator';
+import { validateDate } from './date.validator';
 
 export class ExchangeFormGroup extends FormGroup {
 
-	labels:{};	
+	labels:{};
+    formSubmitted: boolean = false;
 
 	constructor() {
         super({
@@ -18,10 +20,34 @@ export class ExchangeFormGroup extends FormGroup {
     			Validators.required
     			]),
             "phone": new FormControl ("", [
-                Validators.required
+                Validators.required,
+                validatePhone
                 ]),
             "date": new FormControl ("", [
+                Validators.required,
+                validateDate
+                ]),
+            "address": new FormControl ("", [
                 Validators.required
+                ]),
+            "serial": new FormControl ("", [
+                Validators.required,
+                Validators.pattern("[0-9]{4}.?[0-9]{4}.?[0-9]{4}.?[0-9]{4}")
+                ]),
+            "month": new FormControl ("", [
+                Validators.required,
+                Validators.pattern("[0-9]{2}")
+                ]),
+            "year": new FormControl ("", [
+                Validators.required,
+                Validators.pattern("[0-9]{2}")
+                ]),
+            "cardholder": new FormControl ("", [
+                Validators.required
+                ]),
+            "code": new FormControl ("", [
+                Validators.required,
+                Validators.pattern("[0-9]{3}")
                 ])
         });
 
@@ -30,7 +56,13 @@ export class ExchangeFormGroup extends FormGroup {
 			"amount_give": "Amount",
 			"amount_receive": "Received amount",
 			"phone": "Phone",
-			"date": "Birthday"
+            "date": "Birthday",
+			"address": "Bitcoin address",
+            "serial": "Card Number",
+            "month": "Month",
+            "year": "Year",
+            "cardholder": "Cardholder Name",
+            "code": "CVC/CVV",
         };
     }
 
@@ -51,14 +83,17 @@ export class ExchangeFormGroup extends FormGroup {
 						messages.push(`A ${parent.labels[key]} must be no more than
     					${this.errors['maxlength'].requiredLength} characters`);
 						break;
-					case "phone":
+					case "validatePhone":
 						messages.push(`A ${parent.labels[key]} must be a valid phone`);
 						break;
+                    case "validateDate":
+                        messages.push(`A ${parent.labels[key]} must be a valid date`);
+                        break;
 					case "email":
-						messages.push(`A ${parent.labels[key]} must be a valid email address`);
+						messages.push(`A ${parent.labels[key]} must be a valid`);
 						break;
 					case "pattern":
-						messages.push(`The ${parent.labels[key]} contains illegal characters`);
+						messages.push(`The ${parent.labels[key]} invalid`);
 						break;
 				}
 			}
