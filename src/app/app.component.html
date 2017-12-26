@@ -1,20 +1,107 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<header>
+<menu>
+<li><a href="/">Buy bitcoin</a></li>
+<li><a href="/info/terms">Terms of Use</a></li>
+<li><a href="/info/privacy">Privacy Policy</a></li>
+<li><a href="/info/faq">FAQ</a></li>
+</menu>
+</header>
+<div class="left">
+    <h1>Buy bitcoins with a credit or debit card</h1>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
+<div class="right">
+<form method="POST" [formGroup]="exchange_form" #exchange_form_jquery  (ngSubmit)="submit()">
+<input type="hidden" name="type" value="exchange">
+<input type="hidden" name="action" value="validate">
+    <table class="pay">
+	<tr>
+	    <td class="h1">You pay</td><td class="inp inp_long">
+		<select name="give">
+		    <option value="USD" >Credit/Debit cards (USD)</option>
+		    <option value="EUR" >Credit/Debit cards (EUR)</option>
+		</select>
+			    </td>
+	    <td class="inp"><input type="text" name="amount_give" maxlength="9" value="" formControlName="amount_give">
+	    	<div class="alert alert-danger" *ngIf="exchange_form.controls['amount_give'].invalid && exchange_form.controls['amount_give'].touched">Input amount</div>
+	    </td><td><span id="give_currency">USD</span></td>
+	</tr>
+	<tr>
+	    <td class="h1">You receive</td><td class="inp">
+		<select name="receive">
+		    <option value="BTC" >Bitcoin</option>
+		    <option value="LTC" >Litecoin</option>
+		    <option value="ETH" >Ethereum</option>
+		</select>
+			    </td>
+	    <td class="inp"><input type="text" name="amount_receive" maxlength="9"  value="" formControlName="amount_receive">
+	    	<div class="alert alert-danger" *ngIf="exchange_form.controls['amount_receive'].invalid && exchange_form.controls['amount_receive'].touched">Input amount</div>
+	    </td>
+	    <td><span id="receive_currency">BTC</span></td>
+	</tr>
+	<tr><td>&#160;</td><td colspan="3" class="small">
+For the 1st transaction with a new card transfer an amount between 30 USD and 200.00 USD. The second purchase can be made 
+in 7 days ( 400.00 USD Limit). The third payment can be made in 10 days ( 500.00 USD Limit). 
+If your card account currency is other than USD, conversion will be completed at a rate of your bank.	</td></tr>
+	<tr>
+	    <td class="h2">Email</td>
+	    <td class="inp" colspan="3"><input type="text" name="email"  value="" formControlName="email">
+	    	<div class="alert alert-danger" *ngIf="exchange_form.controls['email'].invalid && exchange_form.controls['email'].touched">Input correct email address, please.</div>
+		</td>
+	</tr>
+	<tr>
+	    <td class="h2">Mobile phone</td>
+	    <td class="inp" colspan="3"><input type="text" name="phone" placeholder="+X (XXX) XXX-XX-XX" value="" id="f_phone"></td>
+	</tr>
+		<tr>
+	    <td class="h2">Birthday</td>
+	    <td class="inp" colspan="3"><input type="text" name="date" placeholder="MM/DD/YYYY" value="" id="f_date"></td>
+	</tr>
+	<tr>
+	    <td class="h2">Your bitcoin address</td>
+	    <td class="inp" colspan="3"><input type="text" name="address"  value=""></td>
+	</tr>
+	<tr>
+	    <td colspan="3">
+		<div id="cards">
+		<form class="card-info__cards">
+		    <div class="card-info__card card-info__front">
+			<div class="card-info__bank-logo-wrap">
+			    <a class="card-info__bank-logo-link" href="#"><img class="card-info__bank-logo" alt="" src=""/></a>
+			</div>
+			<div class="card-info__type-logo-wrap"><img class="card-info__type-logo" id="card_logo" alt="" src="/i/master-card-colored.svg"/></div>
+			<div class="card-info__front-fields">
+			    <input class="card-info__field card-info__field-number" type="text" placeholder="0000 0000 0000 0000" name="serial" value="" id="f_serial" />
+			    <label class="card-info__label card-info__label-expired">Valid Thru:</label>
+			    <input class="card-info__field card-info__field-expired card-info__field-mm" type="text" placeholder="MM" name="month"  value="" id="f_month"/>
+			    <input class="card-info__field card-info__field-expired card-info__field-yy" type="text" placeholder="YY" name="year" style="clear:right;"  value="" id="f_year"/>
+			    			    <input class="card-info__field card-info__field-name" type="text" placeholder="Cardholder name" name="cardholder"  value=""/>
+			</div>
+		    </div>
+		    <div class="card-info__card card-info__back">
+			<div class="card-info__back-line"></div>
+			<div class="card-info__back-fields">
+			    <input class="card-info__field card-info__field-code" type="password" id="card_code" placeholder="CVC" name="code"  value="" />
+			    <label class="card-info__label card-info__label-code" id="code_desc">CVC code</label>
+			</div>
+		    </div>
+		</form>
+		</div>
+	    </td>
+	</tr>
+	<tr><td colspan="4" class="btn"><input type="submit" value="Buy bitcoins now"></td></tr>
+    </table>
+</form>
+</div>
+<footer>
+<menu>
+<li><a href="/">Buy bitcoin</a></li>
+<li><a href="/info/terms">Terms of Use</a></li>
+<li><a href="/info/privacy">Privacy Policy</a></li>
+<li><a href="/info/faq">FAQ</a></li>
+</menu>
+<div class="copyright">
+© 2017 Veron Management LP is headquartered in Scotland<br>
+Suite 6057, 15 Bell Street, St Andrews Fife <br>
+Company Number SL030739
+</div>
+</footer>
