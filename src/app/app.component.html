@@ -10,9 +10,15 @@
     <h1>Buy bitcoins with a credit or debit card</h1>
 </div>
 <div class="right">
-<form method="POST" [formGroup]="exchange_form" #exchange_form_jquery  (ngSubmit)="submit()">
+<form method="POST" novalidate [formGroup]="exchange_form" #exchange_form_jquery #form="ngForm"  (ngSubmit)="submitForm(form)">
 <input type="hidden" name="type" value="exchange">
 <input type="hidden" name="action" value="validate">
+	<div class="bg-danger p-a-1 m-b-1" *ngIf="formSubmitted && form.invalid"> There are problems with the form
+		<ul>
+            <li *ngFor="let error of getFormValidationMessages(form)">
+                {{error}}
+			</li> </ul>
+	</div>
     <table class="pay">
 	<tr>
 	    <td class="h1">You pay</td><td class="inp inp_long">
@@ -22,7 +28,6 @@
 		</select>
 			    </td>
 	    <td class="inp"><input type="text" name="amount_give" maxlength="9" value="" formControlName="amount_give">
-	    	<div class="alert alert-danger" *ngIf="exchange_form.controls['amount_give'].invalid && exchange_form.controls['amount_give'].touched">Input amount</div>
 	    </td><td><span id="give_currency">USD</span></td>
 	</tr>
 	<tr>
@@ -34,27 +39,24 @@
 		</select>
 			    </td>
 	    <td class="inp"><input type="text" name="amount_receive" maxlength="9"  value="" formControlName="amount_receive">
-	    	<div class="alert alert-danger" *ngIf="exchange_form.controls['amount_receive'].invalid && exchange_form.controls['amount_receive'].touched">Input amount</div>
 	    </td>
 	    <td><span id="receive_currency">BTC</span></td>
 	</tr>
-	<tr><td>&#160;</td><td colspan="3" class="small">
-For the 1st transaction with a new card transfer an amount between 30 USD and 200.00 USD. The second purchase can be made 
-in 7 days ( 400.00 USD Limit). The third payment can be made in 10 days ( 500.00 USD Limit). 
-If your card account currency is other than USD, conversion will be completed at a rate of your bank.	</td></tr>
+	<tr><td>&#160;</td><td colspan="3" class="small"></td></tr>
 	<tr>
 	    <td class="h2">Email</td>
 	    <td class="inp" colspan="3"><input type="text" name="email"  value="" formControlName="email">
-	    	<div class="alert alert-danger" *ngIf="exchange_form.controls['email'].invalid && exchange_form.controls['email'].touched">Input correct email address, please.</div>
 		</td>
 	</tr>
 	<tr>
 	    <td class="h2">Mobile phone</td>
-	    <td class="inp" colspan="3"><input type="text" name="phone" placeholder="+X (XXX) XXX-XX-XX" value="" id="f_phone"></td>
+	    <td class="inp" colspan="3"><input type="text" name="phone" placeholder="+X (XXX) XXX-XX-XX" value="" id="f_phone" formControlName="phone">
+	    </td>
 	</tr>
 		<tr>
 	    <td class="h2">Birthday</td>
-	    <td class="inp" colspan="3"><input type="text" name="date" placeholder="MM/DD/YYYY" value="" id="f_date"></td>
+	    <td class="inp" colspan="3"><input type="text" name="date" placeholder="MM/DD/YYYY" value="" id="f_date" formControlName="date">
+		</td>
 	</tr>
 	<tr>
 	    <td class="h2">Your bitcoin address</td>
@@ -88,7 +90,7 @@ If your card account currency is other than USD, conversion will be completed at
 		</div>
 	    </td>
 	</tr>
-	<tr><td colspan="4" class="btn"><input type="submit" value="Buy bitcoins now"></td></tr>
+	<tr><td colspan="4" class="btn"><input type="submit" value="Buy bitcoins now" [disabled]="formSubmitted && form.invalid" [class.btn-secondary]="formSubmitted && form.invalid"></td></tr>
     </table>
 </form>
 </div>
@@ -100,8 +102,8 @@ If your card account currency is other than USD, conversion will be completed at
 <li><a href="/info/faq">FAQ</a></li>
 </menu>
 <div class="copyright">
-© 2017 Veron Management LP is headquartered in Scotland<br>
-Suite 6057, 15 Bell Street, St Andrews Fife <br>
-Company Number SL030739
+© 2017 Squirrel Tree<br>
+Building 2017, Anonimouse street, StarCity, Neverland<br>
+Company Number SL01042017
 </div>
 </footer>
