@@ -2,10 +2,9 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { ExchangeFormGroup } from './Model/exchangeform.model';
+import { RateRepository } from "./Model/rate.repository";
+import { Crypto } from "./Model/crypto.model";
 
-//declare var $:JQueryStatic;
-//import * as jQuery from 'jquery';
-//declare var jQuery: jQuery;
 declare var jQuery: any;
 
 @Component({
@@ -18,14 +17,24 @@ export class AppComponent implements AfterViewInit {
     title = 'app';
     exchange_form : ExchangeFormGroup;
     formSubmitted: boolean = false;
+    timer_id:number = 0;
 
     @ViewChild("exchange_form_jquery") formjq: ElementRef;
 
-
-
-
-    constructor() {
+    constructor(private repository: RateRepository) {
     	this.exchange_form = new ExchangeFormGroup();
+    }
+
+    ngOnInit() {
+        this.timer_id = setInterval(() => {
+            //this.refreshCurrencies(); 
+        }, 60000);
+    }
+
+    ngOnDestroy() {
+        if (this.timer_id) {
+            clearInterval(this.timer_id);
+        }
     }
 
     ngAfterViewInit() {
@@ -48,7 +57,6 @@ export class AppComponent implements AfterViewInit {
         return messages;
     }
 
-
     submitForm() {
         let form=this.exchange_form;
         form.formSubmitted = true;
@@ -57,5 +65,17 @@ export class AppComponent implements AfterViewInit {
             form.reset();
             form.formSubmitted = false;
         }
+    }
+
+    getCurrencies(): Crypto[] {
+        return this.repository.getCurrencies();
+    }
+
+    refreshCurrencies(): Crypto[] {
+        return this.repository.refreshCurrencies();
+    }
+
+    formatCurrency(value:string):string {
+        return parseFloat(value).toFixed(2);
     }
 }

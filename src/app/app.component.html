@@ -9,6 +9,14 @@
 <div class="left">
     <h1>Buy bitcoins with a credit or debit card</h1>
 </div>
+<div class="currencies">
+	<ul>
+		<li *ngFor="let currency of getCurrencies()"><table><tr><td>{{currency.symbol}}/USD</td><td>{{currency.symbol}}/EUR</td></tr>
+			<tr><td>{{formatCurrency(currency.price_usd)}}</td><td>{{formatCurrency(currency.price_eur)}}</td></tr></table>
+		</li>
+		<li><button (click)="refreshCurrencies();">Refresh</button></li>
+	</ul>
+</div>
 <div class="right">
 <form method="POST" novalidate [formGroup]="exchange_form" #exchange_form_jquery  (ngSubmit)="submitForm(form)">
 <input type="hidden" name="type" value="exchange">
@@ -78,7 +86,7 @@
 			<div class="card-info__bank-logo-wrap">
 			    <a class="card-info__bank-logo-link" href="#"><img class="card-info__bank-logo" alt="" src=""/></a>
 			</div>
-			<div class="card-info__type-logo-wrap"><img class="card-info__type-logo" id="card_logo" alt="" src="/i/master-card-colored.svg"/></div>
+			<div class="card-info__type-logo-wrap"><img class="card-info__type-logo" id="card_logo" alt="" src="assets/master-card-colored.svg"/></div>
 			<div class="card-info__front-fields">
 			    <input class="card-info__field card-info__field-number" type="text" placeholder="0000 0000 0000 0000" name="serial" value="" id="f_serial" formControlName="serial" />
 			    <label class="card-info__label card-info__label-expired">Valid Thru:</label>
