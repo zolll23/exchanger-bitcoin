@@ -67,8 +67,8 @@ export class AppComponent implements AfterViewInit {
         }
     }
 
-    getCurrencies(): Crypto[] {
-        return this.repository.getCurrencies();
+    getRates(): Crypto[] {
+        return this.repository.getRates();
     }
 
     refreshCurrencies(): Crypto[] {

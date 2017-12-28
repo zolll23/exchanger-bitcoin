@@ -8,21 +8,17 @@ import { RateDataSource } from "./rate.datasource";
 export class RateRepository {
 
 	private currencies: Crypto[] = [];
+	private rates: Rate[];
 
 	constructor (private dataSource: RateDataSource) {
 		this.dataSource = dataSource;
 		this.currencies = dataSource.getCurrencies();
+		this.rates = dataSource.getRates();
 	}
 
 	refreshCurrencies():Crypto[] {
 		this.currencies = this.dataSource.getCurrencies();
-		/*currencies.sort(function (a,b) {
-			console.log('===========');
-			console.log(a);
-			if (a.id<b.id) return -1;
-			if (a.id>b.id) return 1;
-			return 0;
-		});*/
+		this.rates = this.dataSource.getRates();
 		return this.getCurrencies();
 	}
 
@@ -32,5 +28,9 @@ export class RateRepository {
 
 	getCurrency(id: string): Crypto {
 		return this.currencies.find( c => c.id == id);
+	}
+
+	getRates():Rate[] {
+		return this.rates;
 	}
 }

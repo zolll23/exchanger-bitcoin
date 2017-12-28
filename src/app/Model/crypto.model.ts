@@ -18,3 +18,12 @@ export class Crypto {
 	public price_eur: string; 
 	public market_cap_eur: string;
 }
+
+export class Rate {
+
+	constructor(public id:string,
+		public price_usd:string,
+		public price_eur:string
+		public symbol:string
+		) {} 
+}

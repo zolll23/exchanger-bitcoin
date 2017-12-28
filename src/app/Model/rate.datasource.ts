@@ -3,35 +3,49 @@
 import { Injectable } from "@angular/core";
 import { Http, Request, RequestMethod } from "@angular/http";
 import { Observable } from "rxjs/Observable";
-import { Crypto } from "./crypto.model";
+import { Crypto, Rate } from "./crypto.model";
 import "rxjs/add/observable/from";
 import "rxjs/add/operator/map";
 
 const PROTOCOL = "https";
 
 
+
 @Injectable() 
 export class RateDataSource {
 	
 	baseUrl: string;
-	currencies:string[];
+	rates:Rate[];
 	currencyURL:string;
 
 	constructor(private http: Http) {
 		this.baseUrl = `${PROTOCOL}://api.coinmarketcap.com//v1/ticker/`;
-		this.currencies = ['bitcoin','ethereum','litecoin'];
+		this.rates = [
+			new Rate('bitcoin','','','BTC'),
+			new Rate('ethereum','','','ETH'),
+			new Rate('litecoin','','','LTC')
+		];
 		this.currencyURL = "?convert=EUR";
 	}
 
 	getCurrencies():Crypto[] {
 		let info: Crypto[] = [];
-		for (let c in this.currencies) {
-			this.getCurrency(this.currencies[c]).subscribe(data => {
-				info.push(data.pop());
+		for (let c in this.rates) {
+			let rate=this.rates[c];
+			this.getCurrency(rate.id).subscribe(data => {
+				let d = data.pop();
+				info.push(d);
+				// Find index in rates by id currency
+				let idx = this.rates.findIndex(e => e.id==d.id );
+				this.rates[idx].price_usd = d.price_usd;
+				this.rates[idx].price_eur = d.price_eur;
 			});
 		}
-		console.log(info);
 		return info;
+	}
+
+	getRates():Rate[] {
+		return this.rates;
 	}
 
 	getCurrency(currency:string): Observable<any> {
