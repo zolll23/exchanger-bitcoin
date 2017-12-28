@@ -19,6 +19,9 @@ export class AppComponent implements AfterViewInit {
     formSubmitted: boolean = false;
     timer_id:number = 0;
     is_visa:boolean = false;
+    give:string = 'USD';
+    receive:string = 'BTC';
+    input_give: boolean = false;
 
     @ViewChild("exchange_form_jquery") formjq: ElementRef;
 
@@ -60,6 +63,7 @@ export class AppComponent implements AfterViewInit {
 
     submitForm() {
         let form=this.exchange_form;
+        console.log(form);
         form.formSubmitted = true;
         if (form.valid) {
             console.log(form);
@@ -88,5 +92,47 @@ export class AppComponent implements AfterViewInit {
         let first = event.target.value.substr(0,1);
         this.is_visa = first == '4';
         //console.log(first);//, event.keyCode, event.keyIdentifier);
-    } 
+    }
+
+    calcReceive():boolean {
+        let form=this.exchange_form.value;
+        let amount_give = parseFloat(form.amount_give);
+        if (isNaN(amount_give) || amount_give == 0) return false;
+        this.input_give = true;
+        let rates=this.getRates();
+
+        let idx = rates.findIndex(e => e.symbol==form.receive );
+        let rate = parseFloat(rates[idx]['price_'+form.give.toLowerCase()]);
+        let value = amount_give/rate;
+
+        this.exchange_form.value.amount_receive = value.toFixed(7);
+
+        return true;
+    }
+
+    calcGive():boolean {
+        let form=this.exchange_form.value;
+        let amount_receive = parseFloat(form.amount_receive);
+        if (isNaN(amount_receive) || amount_receive == 0) return false;
+        this.input_give = false;
+        let rates=this.getRates();
+
+        let idx = rates.findIndex(e => e.symbol==form.receive );
+        let rate = parseFloat(rates[idx]['price_'+form.give.toLowerCase()]);
+        let value = amount_receive * rate;
+
+        this.exchange_form.value.amount_give = value.toFixed(2);
+        
+        return true;
+    }
+
+
+    setSelect(sel) {
+        this[sel] = this.exchange_form.value[sel];
+        if (this.input_give) {
+            this.calcReceive();
+        } else {
+            this.calcGive();
+        }
+    }
 }

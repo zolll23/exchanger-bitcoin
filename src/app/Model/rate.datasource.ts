@@ -21,9 +21,9 @@ export class RateDataSource {
 	constructor(private http: Http) {
 		this.baseUrl = `${PROTOCOL}://api.coinmarketcap.com//v1/ticker/`;
 		this.rates = [
-			new Rate('bitcoin','','','BTC'),
-			new Rate('ethereum','','','ETH'),
-			new Rate('litecoin','','','LTC')
+			new Rate('bitcoin','','','BTC','Bitcoin'),
+			new Rate('ethereum','','','ETH','Etherium'),
+			new Rate('litecoin','','','LTC','Litecoin')
 		];
 		this.currencyURL = "?convert=EUR";
 	}

@@ -48,7 +48,9 @@ export class ExchangeFormGroup extends FormGroup {
             "code": new FormControl ("", [
                 Validators.required,
                 Validators.pattern("[0-9]{3}")
-                ])
+                ]),
+            "give": new FormControl(),
+            "receive": new FormControl()
         });
 
         this.labels={
@@ -63,6 +65,7 @@ export class ExchangeFormGroup extends FormGroup {
             "year": "Year",
             "cardholder": "Cardholder Name",
             "code": "CVC/CVV",
+            "give": "Currency"
         };
     }
 
