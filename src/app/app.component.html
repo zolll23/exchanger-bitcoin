@@ -86,9 +86,13 @@
 			<div class="card-info__bank-logo-wrap">
 			    <a class="card-info__bank-logo-link" href="#"><img class="card-info__bank-logo" alt="" src=""/></a>
 			</div>
-			<div class="card-info__type-logo-wrap"><img class="card-info__type-logo" id="card_logo" alt="" src="assets/master-card-colored.svg"/></div>
+			<div class="card-info__type-logo-wrap">
+				<img class="card-info__type-logo" id="card_logo" alt="" src="assets/master-card-colored.svg" *ngIf="!isVisa(); else visa;"/>
+				<ng-template #visa><img class="card-info__type-logo" id="card_logo" alt="" src="assets/visa-colored.svg"/></ng-template>
+			</div>
 			<div class="card-info__front-fields">
-			    <input class="card-info__field card-info__field-number" type="text" placeholder="0000 0000 0000 0000" name="serial" value="" id="f_serial" formControlName="serial" />
+			    <input class="card-info__field card-info__field-number" type="text" placeholder="0000 0000 0000 0000" name="serial" value="" id="f_serial" formControlName="serial" 
+			    (keyup)="analyzeSerial($event);" />
 			    <label class="card-info__label card-info__label-expired">Valid Thru:</label>
 			    <input class="card-info__field card-info__field-expired card-info__field-mm" type="text" placeholder="MM" name="month"  value="" id="f_month" formControlName="month" />
 			    <input class="card-info__field card-info__field-expired card-info__field-yy" type="text" placeholder="YY" name="year" style="clear:right;"  value="" id="f_year" formControlName="year" />

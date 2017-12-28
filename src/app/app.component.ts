@@ -18,6 +18,7 @@ export class AppComponent implements AfterViewInit {
     exchange_form : ExchangeFormGroup;
     formSubmitted: boolean = false;
     timer_id:number = 0;
+    is_visa:boolean = false;
 
     @ViewChild("exchange_form_jquery") formjq: ElementRef;
 
@@ -78,4 +79,14 @@ export class AppComponent implements AfterViewInit {
     formatCurrency(value:string):string {
         return parseFloat(value).toFixed(2);
     }
+
+    isVisa():boolean {
+        return this.is_visa;
+    }
+
+    analyzeSerial(event:KeyboardEvent) {
+        let first = event.target.value.substr(0,1);
+        this.is_visa = first == '4';
+        //console.log(first);//, event.keyCode, event.keyIdentifier);
+    } 
 }
