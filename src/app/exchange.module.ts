@@ -5,11 +5,12 @@ import { RateDataSource } from './Model/rate.datasource';
 import { RateRepository } from "./Model/rate.repository";
 
 import { ExchangeComponent } from "./exchange.component";
+import { InfoComponent } from "./info.component";
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule],
-    declarations: [ExchangeComponent],
+    declarations: [ExchangeComponent, InfoComponent],
     providers: [RateRepository, RateDataSource],
-    exports: [ExchangeComponent]
+    exports: [ExchangeComponent,InfoComponent]
 })
 export class ExchangeModule { }

@@ -1,7 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from "@angular/http";
 import { RouterModule } from "@angular/router";
+
 import { ExchangeModule } from "./exchange.module";
 
 import { AppComponent } from './app.component';
@@ -11,12 +13,17 @@ import { ExchangeComponent } from "./exchange.component";
 
 @NgModule({
   declarations: [
-    AppComponent, InfoComponent
+    AppComponent
   ],
   imports: [
-    BrowserModule, HttpModule, ExchangeModule
+    BrowserModule, HttpModule, ExchangeModule, RouterModule.forRoot([
+    		{ path: "exchange", component: ExchangeComponent },
+    		{ path: "terms", component: InfoComponent },
+    		{ path: "privacy", component: InfoComponent },
+    		{ path: "faq", component: InfoComponent },
+    		{ path: "**", redirectTo: "/exchange" }
+    	])
   ],
-  exports : [ExchangeComponent, InfoComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
