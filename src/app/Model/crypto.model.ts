@@ -23,8 +23,8 @@ export class Rate {
 
 	constructor(public id:string,
 		public price_usd:string,
-		public price_eur:string
-		public symbol:string
+		public price_eur:string,
+		public symbol:string,
 		public name:string
 		) {} 
 }

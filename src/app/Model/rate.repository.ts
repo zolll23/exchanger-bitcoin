@@ -1,7 +1,7 @@
 // rate.repository.ts
 
 import { Injectable } from "@angular/core";
-import { Crypto } from "./crypto.model";
+import { Rate, Crypto } from "./crypto.model";
 import { RateDataSource } from "./rate.datasource";
 
 @Injectable()

@@ -1,21 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from "@angular/http";
-import { RateDataSource } from './Model/rate.datasource';
-import { RateRepository } from "./Model/rate.repository";
+import { RouterModule } from "@angular/router";
+import { ExchangeModule } from "./exchange.module";
 
 import { AppComponent } from './app.component';
+import { InfoComponent } from "./info.component";
+import { ExchangeComponent } from "./exchange.component";
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, InfoComponent
   ],
   imports: [
-    BrowserModule, FormsModule, ReactiveFormsModule, HttpModule
+    BrowserModule, HttpModule, ExchangeModule
   ],
-  providers: [RateRepository, RateDataSource],
+  exports : [ExchangeComponent, InfoComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
