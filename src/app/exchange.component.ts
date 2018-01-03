@@ -3,13 +3,16 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { ExchangeFormGroup } from './Model/exchangeform.model';
 import { RateRepository } from "./Model/rate.repository";
 import { Rate, Crypto } from "./Model/crypto.model";
+import { routerTransition } from './router.animations';
 
 declare var jQuery: any;
 
 @Component({
     selector: 'exchange',
     moduleId: module.id,
-    templateUrl: './exchange.component.html'
+    templateUrl: './exchange.component.html',
+    animations: [routerTransition()],
+    host: {'[@routerTransition]': ''}
 })
 
 export class ExchangeComponent implements AfterViewInit {
