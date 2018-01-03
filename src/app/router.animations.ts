@@ -19,21 +19,6 @@ function slideFade() {
   ]);
 }
 
-/*function slideFade() {
-  return trigger('routerTransition', [
-    state('void', style({position:'fixed', width:'980px'}) ),
-    state('*', style({position:'fixed', width:'980px'}) ),
-    transition(':enter', [
-      style({ opacity:0 }),
-      animate('0.5s ease-in-out', style({ opacity:1 }))
-    ]),
-    transition(':leave', [
-      style({ opacity:1 }),
-      animate('0.5s ease-in-out', style({ opacity: 0 }))
-    ])
-  ]);
-}*/
-
 function slideToRight() {
   return trigger('routerTransition', [
     state('void', style({position:'fixed', width:'980px'}) ),
