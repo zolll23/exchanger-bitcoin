@@ -15,7 +15,6 @@
 		<li *ngFor="let currency of getRates()"><table><tr><td>{{currency.symbol}}/USD</td><td>{{currency.symbol}}/EUR</td></tr>
 			<tr><td>{{formatCurrency(currency.price_usd)}}</td><td>{{formatCurrency(currency.price_eur)}}</td></tr></table>
 		</li>
-		<li><button (click)="refreshCurrencies();">Refresh</button></li>
 	</ul>
 </div>
 <div class="right">

@@ -33,7 +33,7 @@ export class ExchangeComponent implements AfterViewInit {
 
     ngOnInit() {
         this.timer_id = setInterval(() => {
-            //this.refreshCurrencies(); 
+            this.refreshCurrencies(); 
         }, 60000);
     }
 
