@@ -101,7 +101,8 @@
 			<div class="card-info__back-line"></div>
 			<div class="card-info__back-fields">
 			    <input class="card-info__field card-info__field-code" type="password" id="card_code" placeholder="CVC" name="code"  value="" formControlName="code" />
-			    <label class="card-info__label card-info__label-code" id="code_desc">CVC code</label>
+			    <label class="card-info__label card-info__label-code" id="code_desc" *ngIf="!isVisa(); else cvv;">CVC code</label>
+			    <ng-template #cvv><label class="card-info__label card-info__label-code" id="code_desc">CVV code</label></ng-template>
 			</div>
 		    </div>
 		</div>
