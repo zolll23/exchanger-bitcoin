@@ -18,7 +18,7 @@
 	</ul>
 </div>
 <div class="right">
-<form method="POST" novalidate [formGroup]="exchange_form" #exchange_form_jquery  (ngSubmit)="submitForm(form)">
+<form method="POST" novalidate [formGroup]="exchange_form" #exchange_form_jquery  (ngSubmit)="submitForm(form)" _enctype="multipart/form-data">
 <input type="hidden" name="type" value="exchange">
 <input type="hidden" name="action" value="validate">
 	
@@ -28,7 +28,7 @@
 	    <td class="h1">You pay</td><td class="inp inp_long">
 		<select name="give" formControlName="give" (change)="setSelect('give')" [ngModel]="give">
 		    <option value="USD" [selected]="give=='USD'">Credit/Debit cards (USD)</option>
-		    <option value="EUR" >Credit/Debit cards (EUR)</option>
+		    <option value="EUR" [selected]="give=='EUR'">Credit/Debit cards (EUR)</option>
 		</select>
 			    </td>
 	    <td class="inp"><input type="text" name="amount_give" maxlength="9" [value]="exchange_form.value.amount_give" formControlName="amount_give" (keyup)="calcReceive();">
