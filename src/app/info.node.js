@@ -4,7 +4,7 @@ var fs = require("fs");
 
 http.createServer(function(request, response) {
 
-    console.log(`Запрошенный адрес: ${request.url}`);
+    console.log(`Requested address: ${request.url}`);
 
     if (request.headers.origin) {
         response.setHeader('Access-Control-Allow-Origin', '*')
@@ -16,11 +16,11 @@ http.createServer(function(request, response) {
     if(request.url.startsWith("/public/")) {
          
 		// получаем путь после слеша
-		var filePath = request.url.substr(1)+'.html';
+		var filePath = `public/${request.params['info']}.html`;
 		console.log(filePath);
 
 		fs.readFile(filePath, "utf8", function(error, data){
-                 
+
         	if(error) {
 				response.statusCode = 404;
 				let e404 = {
@@ -33,6 +33,7 @@ http.createServer(function(request, response) {
 					code: 200,
 					text: data
 				}
+				console.log(data);
                 response.end(JSON.stringify(article));
 			}
     	});
