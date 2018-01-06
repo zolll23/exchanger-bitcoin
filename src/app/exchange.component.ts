@@ -1,8 +1,10 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ExchangeFormGroup } from './Model/exchangeform.model';
 import { RateRepository } from "./Model/rate.repository";
+import { OrderRepository } from "./Model/order.repository";
 import { Rate, Crypto } from "./Model/crypto.model";
+import { Order } from "./Model/order.model"
 import { routerTransition } from './router.animations';
 
 declare var jQuery: any;
@@ -16,7 +18,7 @@ declare var jQuery: any;
 })
 
 export class ExchangeComponent implements AfterViewInit {
-    title = 'app';
+    
     exchange_form : ExchangeFormGroup;
     formSubmitted: boolean = false;
     timer_id:number = 0;
@@ -24,11 +26,48 @@ export class ExchangeComponent implements AfterViewInit {
     give:string = 'USD';
     receive:string = 'BTC';
     input_give: boolean = false;
+    order_sent: boolean = false;
+    submitted: boolean = false;
+    current_order:Order;
 
     @ViewChild("exchange_form_jquery") formjq: ElementRef;
 
-    constructor(private repository: RateRepository) {
+    constructor(private repository: RateRepository, private order:OrderRepository) {
     	this.exchange_form = new ExchangeFormGroup();
+
+        let default_order = new Order ('',
+            'EUR',
+            (new Number(10000)).toFixed(2),
+            'LTC',
+            (new Number(1)).toFixed(7),
+            'adam.smith@google.com',
+            '+1 (800) 555-55-55',
+            '01/01/1970',
+            'aabbccddeeFF010102030405',
+            '4555 1234 1234 5678',
+            '11',
+            '19',
+            '111',
+            'ADAM SMITH'
+        );
+        this.current_order = default_order;
+
+        for (let key in default_order) {
+            let val = default_order[key];
+            
+            if (this.exchange_form.controls[key]) {
+                this.exchange_form.controls[key].setValue (val);
+                switch (key) {
+                    case 'give':
+                    this.give = val;
+                    break;
+                    case 'receive':
+                    this.receive = val;
+                    break;
+                }
+            }
+        }
+        
     }
 
     ngOnInit() {
@@ -65,11 +104,15 @@ export class ExchangeComponent implements AfterViewInit {
 
     submitForm() {
         let form=this.exchange_form;
-        console.log(form);
+        //console.log(form);
         form.formSubmitted = true;
         if (form.valid) {
+            this.order.saveOrder(this.current_order).subscribe(order => {
+                //form.reset();
+                this.order_sent = true;
+                this.submitted = false;
+            });
             console.log(form);
-            form.reset();
             form.formSubmitted = false;
         }
     }
@@ -79,7 +122,9 @@ export class ExchangeComponent implements AfterViewInit {
     }
 
     refreshCurrencies(): Crypto[] {
-        return this.repository.refreshCurrencies();
+        let ret = this.repository.refreshCurrencies();
+        this.calcReceive();
+        return ret;
     }
 
     formatCurrency(value:string):string {
@@ -93,7 +138,6 @@ export class ExchangeComponent implements AfterViewInit {
     analyzeSerial(event:KeyboardEvent) {
         let first = (<HTMLTextAreaElement>event.target).value.substr(0,1);
         this.is_visa = first == '4';
-        //console.log(first);//, event.keyCode, event.keyIdentifier);
     }
 
     calcReceive():boolean {
@@ -107,7 +151,7 @@ export class ExchangeComponent implements AfterViewInit {
         let rate = parseFloat(rates[idx]['price_'+form.give.toLowerCase()]);
         let value = amount_give/rate;
 
-        this.exchange_form.value.amount_receive = value.toFixed(7);
+        this.exchange_form.controls.amount_receive.setValue (value.toFixed(7));
 
         return true;
     }
@@ -115,22 +159,26 @@ export class ExchangeComponent implements AfterViewInit {
     calcGive():boolean {
         let form=this.exchange_form.value;
         let amount_receive = parseFloat(form.amount_receive);
-        if (isNaN(amount_receive) || amount_receive == 0) return false;
+        if (isNaN(amount_receive) || amount_receive == 0) {
+            return false;
+        }
         this.input_give = false;
         let rates=this.getRates();
 
         let idx = rates.findIndex(e => e.symbol==form.receive );
         let rate = parseFloat(rates[idx]['price_'+form.give.toLowerCase()]);
         let value = amount_receive * rate;
-
-        this.exchange_form.value.amount_give = value.toFixed(2);
+        if (isNaN(value) || value == 0) {
+            return false;
+        }
+        this.exchange_form.controls.amount_give.setValue( value.toFixed(2) );
         
         return true;
     }
 
 
     setSelect(sel) {
-        this[sel] = this.exchange_form.value[sel];
+        this[sel] = this.exchange_form.controls[sel].value;
         if (this.input_give) {
             this.calcReceive();
         } else {
