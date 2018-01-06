@@ -79,12 +79,10 @@ export class ExchangeFormGroup extends FormGroup {
                     	messages.push(`You must enter a ${parent.labels[key]}`);
                     	break;
                 	case "minlength":
-                    	messages.push(`A ${parent.labels[key]} must be at least
-                        ${this.errors['minlength'].requiredLength} characters`);
+                    	messages.push(`A ${parent.labels[key]} must be at least ${control.errors.minlength} characters`);
                     	break;
 					case "maxlength":
-						messages.push(`A ${parent.labels[key]} must be no more than
-    					${this.errors['maxlength'].requiredLength} characters`);
+						messages.push(`A ${parent.labels[key]} must be no more than ${control.errors.maxlength} characters`);
 						break;
 					case "validatePhone":
 						messages.push(`A ${parent.labels[key]} must be a valid phone`);
