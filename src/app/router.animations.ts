@@ -6,8 +6,8 @@ export function routerTransition() {
 
 function slideFade() {
   return trigger('routerTransition', [
-    state('void', style({position:'fixed', width:'980px'}) ),
-    state('*', style({position:'relative', width:'980px'}) ),
+    state('void', style({position:'fixed', width:'980px', display:'block' }) ),
+    state('*', style({position:'relative', width:'980px', display:'block' }) ),
     transition(':enter', [
       style({ opacity:0 }),
       animate('0.5s ease-in-out', style({ opacity:1 }))
