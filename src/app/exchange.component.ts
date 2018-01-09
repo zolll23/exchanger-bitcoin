@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from "@angular/router";
 import { ExchangeFormGroup } from './Model/exchangeform.model';
 import { RateRepository } from "./Model/rate.repository";
 import { OrderRepository } from "./Model/order.repository";
@@ -10,7 +11,7 @@ import { routerTransition } from './router.animations';
 declare var jQuery: any;
 
 @Component({
-    selector: 'exchange',
+    selector: 'app-root',
     moduleId: module.id,
     templateUrl: './exchange.component.html',
     animations: [routerTransition()],
@@ -32,7 +33,7 @@ export class ExchangeComponent implements AfterViewInit {
 
     @ViewChild("exchange_form_jquery") formjq: ElementRef;
 
-    constructor(private repository: RateRepository, private order:OrderRepository) {
+    constructor(private repository: RateRepository, private order:OrderRepository, private router: Router) {
     	this.exchange_form = new ExchangeFormGroup();
 
         let default_order = new Order ('',
@@ -107,11 +108,16 @@ export class ExchangeComponent implements AfterViewInit {
         //console.log(form);
         form.formSubmitted = true;
         if (form.valid) {
-            this.order.saveOrder(this.current_order).subscribe(order => {
-                //form.reset();
+            let result = this.order.saveOrder(this.current_order).subscribe(result => {
+                form.reset();
                 this.order_sent = true;
                 this.submitted = false;
+                if (result.status == 'OK') {
+                    this.router.navigate(['/complete']);
+                }
             });
+            console.log('--- result ----');
+            console.log(result);
             console.log(form);
             form.formSubmitted = false;
         }

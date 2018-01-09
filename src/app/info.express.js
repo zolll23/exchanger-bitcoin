@@ -77,7 +77,7 @@ app.post("/orders",function (request, response) {
 	console.log(request.body);
 	var myData = new Orders(request.body);
 	myData.save().then(item => {
-		response.send('Ok');
+		response.send(JSON.stringify({status:'OK'}));
 	}).catch (err => {
 		response.status(400).send('Error');
 	});

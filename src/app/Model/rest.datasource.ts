@@ -20,15 +20,12 @@ export class RestDataSource {
     }
     
     private sendRequest(verb: RequestMethod, url: string, body?: Order): Observable<Order> {
-        console.log(verb);
         let req = new Request({
             method: verb,
             url: this.baseUrl + url,
             body: body
         });
         
-        console.log('req.method:', RequestMethod[req.method]); // Post
-        console.log('req.url:', req.url); // https://google.com
         return this.http.request(req).map(response => response.json());
     }
 }

@@ -24,53 +24,53 @@
 	
     <table class="pay">
 	<tr>
-		<td class="validate"><span *ngIf="exchange_form.controls['amount_give'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['amount_give']}}</span></td>
+		<td class="fe-validate"><span *ngIf="exchange_form.controls['amount_give'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['amount_give']}}</span></td>
 	    <td class="h1">You pay</td><td class="inp inp_long">
 		<select name="give" formControlName="give" (change)="setSelect('give')" [ngModel]="give">
 		    <option value="USD" [selected]="give=='USD'">Credit/Debit cards (USD)</option>
 		    <option value="EUR" [selected]="give=='EUR'">Credit/Debit cards (EUR)</option>
 		</select>
 			    </td>
-	    <td class="inp"><input type="text" name="amount_give" maxlength="9" [value]="exchange_form.value.amount_give" formControlName="amount_give" (keyup)="calcReceive();">
+	    <td class="inp"><input type="text" name="amount_give"  [value]="exchange_form.value.amount_give" formControlName="amount_give" (keyup)="calcReceive();">
 	    </td><td><span id="give_currency">{{give}}</span></td>
 	</tr>
 	<tr>
-		<td class="validate"><span *ngIf="exchange_form.controls['amount_receive'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['amount_receive']}}</span></td>
+		<td class="fe-validate"><span *ngIf="exchange_form.controls['amount_receive'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['amount_receive']}}</span></td>
 	    <td class="h1">You receive</td><td class="inp">
 		<select name="receive" formControlName="receive" (change)="setSelect('receive')" [ngModel]="receive">
 			<option *ngFor="let rate of getRates()" [value]="rate.symbol" [selected]="rate.symbol==receive">{{rate.name}}</option>
 		</select>
 			    </td>
-	    <td class="inp"><input type="text" name="amount_receive" maxlength="9"  [value]="exchange_form.value.amount_receive" formControlName="amount_receive"  (keyup)="calcGive();">
+	    <td class="inp"><input type="text" name="amount_receive"  [value]="exchange_form.value.amount_receive" formControlName="amount_receive"  (keyup)="calcGive();">
 	    </td>
 	    <td><span id="receive_currency">{{receive}}</span></td>
 	</tr>
 	<tr><td>&#160;</td><td colspan="3" class="small"></td></tr>
 	<tr>
-		<td class="validate"><span *ngIf="exchange_form.controls['email'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['email']}}</span></td>
+		<td class="fe-validate"><span *ngIf="exchange_form.controls['email'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['email']}}</span></td>
 	    <td class="h2">Email</td>
 	    <td class="inp" colspan="3"><input type="text" name="email"  value="" formControlName="email">
 		</td>
 	</tr>
 	<tr>
-		<td class="validate"><span *ngIf="exchange_form.controls['phone'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['phone']}}</span></td>
+		<td class="fe-validate"><span *ngIf="exchange_form.controls['phone'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['phone']}}</span></td>
 	    <td class="h2">Mobile phone</td>
 	    <td class="inp" colspan="3"><input type="text" name="phone" placeholder="+X (XXX) XXX-XX-XX" value="" id="f_phone" formControlName="phone">
 	    </td>
 	</tr>
 	<tr>
-		<td class="validate"><span *ngIf="exchange_form.controls['date'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['date']}}</span></td>
+		<td class="fe-validate"><span *ngIf="exchange_form.controls['date'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['date']}}</span></td>
 	    <td class="h2">Birthday</td>
 	    <td class="inp" colspan="3"><input type="text" name="date" placeholder="MM/DD/YYYY" value="" id="f_date" formControlName="date">
 		</td>
 	</tr>
 	<tr>
-		<td class="validate"><span *ngIf="exchange_form.controls['address'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['address']}}</span>
+		<td class="fe-validate"><span *ngIf="exchange_form.controls['address'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['address']}}</span>
 	    <td class="h2">Your bitcoin address</td>
 	    <td class="inp" colspan="3"><input type="text" name="address"  value="" formControlName="address"></td>
 	</tr>
 	<tr>
-		<td class="validate">
+		<td class="fe-validate">
 			<span *ngIf="exchange_form.controls['serial'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['serial']}}</span>
 			<span *ngIf="exchange_form.controls['month'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['month']}}</span>
 			<span *ngIf="exchange_form.controls['year'].invalid && exchange_form.formSubmitted">{{getFormValidationMessages(form)['year']}}</span>
@@ -109,7 +109,7 @@
 		</div>
 	    </td>
 	</tr>
-	<tr><td colspan="4" class="btn"><input type="submit" value="Buy bitcoins now" [disabled]="exchange_form.formSubmitted && exchange_form.invalid" [class.disabled]="exchange_form.formSubmitted && exchange_form.invalid"></td></tr>
+	<tr><td colspan="4" class="fe-btn"><input type="submit" value="Buy bitcoins now" [disabled]="exchange_form.formSubmitted && exchange_form.invalid" [class.disabled]="exchange_form.formSubmitted && exchange_form.invalid"></td></tr>
     </table>
 </form>
 </div>
@@ -126,4 +126,3 @@
 			Company Number SL01042017
 			</div>
 	</footer>
-

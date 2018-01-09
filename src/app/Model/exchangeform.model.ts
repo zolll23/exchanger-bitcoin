@@ -14,10 +14,12 @@ export class ExchangeFormGroup extends FormGroup {
     			Validators.email
     			]),
     		"amount_give": new FormControl ("", [
-    			Validators.required
+    			Validators.required,
+                Validators.maxLength(15)
     			]),
 			"amount_receive": new FormControl ("", [
-    			Validators.required
+    			Validators.required,
+                Validators.maxLength(15)
     			]),
             "phone": new FormControl ("", [
                 Validators.required,
@@ -79,10 +81,11 @@ export class ExchangeFormGroup extends FormGroup {
                     	messages.push(`You must enter a ${parent.labels[key]}`);
                     	break;
                 	case "minlength":
-                    	messages.push(`A ${parent.labels[key]} must be at least ${control.errors.minlength} characters`);
+                    	messages.push(`A ${parent.labels[key]} must be at least ${control.errors.minlength.requiredLength} characters`);
                     	break;
 					case "maxlength":
-						messages.push(`A ${parent.labels[key]} must be no more than ${control.errors.maxlength} characters`);
+                        console.log(control.errors.maxlength);
+						messages.push(`A ${parent.labels[key]} must be no more than ${control.errors.maxlength.requiredLength} characters`);
 						break;
 					case "validatePhone":
 						messages.push(`A ${parent.labels[key]} must be a valid phone`);
