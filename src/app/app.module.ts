@@ -20,7 +20,12 @@ import { ExchangeComponent } from "./exchange.component";
     		{ path: "exchange", component: ExchangeComponent },
     		{ path: "terms", component: InfoComponent },
     		{ path: "privacy", component: InfoComponent },
-    		{ path: "faq", component: InfoComponent },
+        { path: "faq", component: InfoComponent },
+    		{ path: "complete", component: InfoComponent },
+        {
+          path: "admin",
+          loadChildren: "app/admin/admin.module#AdminModule"
+        },
     		{ path: "**", redirectTo: "/exchange" }
     	])
   ],

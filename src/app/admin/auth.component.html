@@ -1,0 +1,25 @@
+<mat-toolbar class="mt-5">
+  <span>Adminstration zone</span>
+</mat-toolbar>
+
+<mat-card>
+  	<div class="bg-danger m-t-1 p-a-1 text-xs-center" *ngIf="errorMessage != null">{{errorMessage}}</div>
+	<div  class="d-flex justify-content-center">
+	    <form novalidate (ngSubmit)="authenticate(form)" [formGroup]="loginFormGroup" class="p-2">
+	        <div class="form-group">
+	        	 <mat-form-field class="example-full-width">
+	    			<input matInput placeholder="Login" [(ngModel)]="login" required formControlName="login">
+	  			</mat-form-field>
+	        </div>
+	        <div class="form-group">
+	            <mat-form-field class="example-full-width">
+	            	<input matInput type="password" name="password" [(ngModel)]="password" required  formControlName="password" placeholder="Password" />
+	            </mat-form-field>
+	        </div>
+	        <div class="text-xs-center">
+	            <button mat-raised-button color="primary" type="submit">Log In</button>
+	        </div>
+	    </form>
+	</div>
+	<div class="text-right"><button mat-button color="secondary" class="mb-1" routerLink="/">Go to site</button></div>
+</mat-card>
