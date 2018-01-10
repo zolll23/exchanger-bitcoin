@@ -1,5 +1,4 @@
 // info.model.ts
 export class Info {
-
-	constructor(public code:number, public text:string) {} 
+    constructor(public code: number, public text: string) {}
 }

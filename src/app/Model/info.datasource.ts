@@ -1,42 +1,35 @@
-import { Injectable } from "@angular/core";
-import { Http, Request, RequestMethod } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-import { Info } from "./info.model";
-import "rxjs/add/operator/map";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { Info } from './info.model';
 
-const PROTOCOL = "http";
+const PROTOCOL = 'http';
 const PORT = 3000;
 
 
-@Injectable() 
+@Injectable()
 export class InfoDataSource {
-	
-	baseUrl: string;
-	info: Info;
 
-	constructor(private http: Http) {
-		this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/public`;
-		this.info = new Info(200,'loading...');
-	}
+    baseUrl: string;
+    info: Info;
 
-	loadInfo(url:string):Info {
-			this.sendRequest(RequestMethod.Get, `${url}`).subscribe(data => {
-				this.info = data;
-			});
-		return this.info;
-	}
+    constructor(private http: HttpClient) {
+        this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/public`;
+        this.info = new Info(200, 'loading...');
+    }
 
-	getInfo():Info {
-		return this.info;
-	}
+    loadInfo(url: string): Info {
+            this.sendRequest(`${url}`).subscribe(data => {
+                this.info = data;
+            });
+        return this.info;
+    }
 
-	private sendRequest(verb: RequestMethod, url: string, body ?: Object):Observable<Info> {
-		return this.http.request(new Request({
-			method: verb,
-			url: this.baseUrl + url,
-			body: body
-		})).map( response => response.json() );
-	}
+    getInfo(): Info {
+        return this.info;
+    }
 
-
+    private sendRequest( url: string, body ?: Object): Observable<Info> {
+        return this.http.get<Info>(this.baseUrl + url);
+    }
 }
