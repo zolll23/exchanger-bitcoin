@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { HttpModule } from '@angular/http';
@@ -29,7 +29,7 @@ class MockRouter {
 // { provide: APP_BASE_HREF, useValue : '/' }, { provide: Router, useClass: MockRouter }
 describe ('ExchangeComponent', function () {
 
-    let fixture: ComponentFixture<BannerComponent>;
+    let fixture: ComponentFixture<ExchangeComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -61,8 +61,84 @@ describe ('ExchangeComponent', function () {
     it('should render h1 tag', () => {
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
-        console.log(compiled.querySelector('h1').textContent);
         expect(compiled.querySelector('h1').textContent).toContain('Buy bitcoins');
     });
-});
 
+    it('should get Rates for 3 crypto coins', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getRates().length).toEqual(3);
+    });
+
+    it('should get refreshCurrencies for 3 crypto coins', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.refreshCurrencies().length).toEqual(3);
+    });
+
+    it('should get getFormValidationMessages for empty form: email', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().email).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: amount_give', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().amount_give).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: amount_receive', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().amount_receive).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: phone', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().phone).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: date', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().date).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: address', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().address).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: serial', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().serial).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: month', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().month).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: year', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().year).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: cardholder', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().cardholder).toBeDefined();
+    });
+
+    it('should get getFormValidationMessages for empty form: code', () => {
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.getFormValidationMessages().code).toBeDefined();
+    });
+});

@@ -36,7 +36,7 @@ export class ExchangeComponent implements AfterViewInit, OnInit, OnDestroy {
     constructor(private repository: RateRepository, private order: OrderRepository, private router: Router) {
         this.exchange_form = new ExchangeFormGroup();
 
-        const default_order = new Order ('',
+        let default_order = new Order ('',
             'EUR',
             (1000).toFixed(2),
             'LTC',
