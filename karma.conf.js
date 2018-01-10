@@ -4,6 +4,7 @@ const path = require('path');
 
 module.exports = function (config) {
   config.set({
+    DEFAULT_TIMEOUT_INTERVAL: 10000,
     basePath: '',
     frameworks: ['jasmine', '@angular/cli'],
     plugins: [
@@ -12,6 +13,10 @@ module.exports = function (config) {
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular/cli/plugins/karma')
+    ],
+    files: [
+      { pattern: './node_modules/jquery/dist/jquery.min.js', watched: false },
+      { pattern: './node_modules/jquery-mask-plugin/dist/jquery.mask.min.js', watched: false }
     ],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser

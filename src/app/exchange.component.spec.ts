@@ -1,5 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { HttpModule } from '@angular/http';
 // import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
@@ -21,17 +22,20 @@ import { Order } from './Model/order.model';
 
 declare var jQuery: any;
 
+
 class MockRouter {
     navigateByUrl(url: string) { return url; }
 }
 // { provide: APP_BASE_HREF, useValue : '/' }, { provide: Router, useClass: MockRouter }
 describe ('ExchangeComponent', function () {
-    beforeEach(async(() => {
+
+    let fixture: ComponentFixture<BannerComponent>;
+
+    beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ FormsModule, ReactiveFormsModule,
+            imports: [ FormsModule, ReactiveFormsModule, BrowserAnimationsModule,
                 RouterTestingModule.withRoutes([ { path: '', component: ExchangeComponent } ])
             ],
-            // RouterModule.forRoot( [ { path: '', component: ExchangeComponent } ])
             declarations: [ ExchangeComponent ],
             providers: [
                 RateRepository,
@@ -43,20 +47,22 @@ describe ('ExchangeComponent', function () {
                 { provide: RestDataSource, useClass: RestStaticDataSource }
             ]
         }).compileComponents();
-    }));
 
+        fixture = TestBed.createComponent(ExchangeComponent);
+    });
 
-    it('should create the ExchangeComponent', async(() => {
-        const fixture = TestBed.createComponent(ExchangeComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app).toBeTruthy();
-    }));
+    it('should create the ExchangeComponent', () => { 
+         fixture.detectChanges();
+         const app = fixture.debugElement.componentInstance;
+         expect(app).toBeTruthy();
+    });
+    
 
-    it('should render h1 tag', async(() => {
-        const fixture = TestBed.createComponent(ExchangeComponent);
+    it('should render h1 tag', () => {
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
         console.log(compiled.querySelector('h1').textContent);
         expect(compiled.querySelector('h1').textContent).toContain('Buy bitcoins');
-    }));
+    });
 });
+
