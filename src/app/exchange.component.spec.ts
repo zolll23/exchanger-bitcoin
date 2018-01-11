@@ -51,12 +51,11 @@ describe ('ExchangeComponent', function () {
         fixture = TestBed.createComponent(ExchangeComponent);
     });
 
-    it('should create the ExchangeComponent', () => { 
+    it('should create the ExchangeComponent', () => {
          fixture.detectChanges();
          const app = fixture.debugElement.componentInstance;
          expect(app).toBeTruthy();
     });
-    
 
     it('should render h1 tag', () => {
         fixture.detectChanges();
