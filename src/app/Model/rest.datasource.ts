@@ -14,11 +14,15 @@ export class RestDataSource {
         this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
     }
 
+    authenticate(login: string, password: string): Observable<any> {
+        return this.http.post(this.baseUrl + 'login', { login: login, password: password } );
+    }
+
     saveOrder(order: Order): Observable<any> {
         return this.sendRequest('orders', order);
     }
 
-    private sendRequest( url: string, body?: Order): Observable<any> {
+    private sendRequest( url: string, body?: Order ): Observable<any> {
         return this.http.post(this.baseUrl + url, body);
     }
 }

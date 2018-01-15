@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../Model/auth.service';
 
 @Component({
     moduleId: module.id,
@@ -10,12 +11,12 @@ import { Router } from '@angular/router';
 })
 
 export class AuthComponent {
-    public username: string;
+    public login: string;
     public password: string;
     public errorMessage: string;
     private loginFormGroup: FormGroup;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private auth: AuthService) {
         this.loginFormGroup = new FormGroup({
             'login': new FormControl(),
             'password': new FormControl()
@@ -24,7 +25,19 @@ export class AuthComponent {
 
     authenticate(form: NgForm) {
         if (form.valid) {
-            this.router.navigateByUrl('/admin/main');
+            this.auth.authenticate(this.login, this.password).subscribe(response => {
+                if (response) {
+                    this.auth.authenticated = response.success ? response.token : null ;
+                    if (this.auth.authenticated) {
+                        this.router.navigateByUrl('/admin/main');
+                    } else {
+                        this.errorMessage = 'Authentication Failed';
+                    }
+                } else {
+                    console.log('Get auth data is failed');
+                    this.auth.authenticated = null;
+                }
+            });
         } else {
             this.errorMessage = 'Form Data Invalid';
         }

@@ -3,9 +3,9 @@
 </mat-toolbar>
 
 <mat-card>
-  	<div class="bg-danger m-t-1 p-a-1 text-xs-center" *ngIf="errorMessage != null">{{errorMessage}}</div>
+  	<div class="bg-danger mt-1 p-1 text-sm-center" *ngIf="errorMessage != null">{{errorMessage}}</div>
 	<div  class="d-flex justify-content-center">
-	    <form novalidate (ngSubmit)="authenticate(form)" [formGroup]="loginFormGroup" class="p-2">
+	    <form novalidate (ngSubmit)="authenticate(form)" #form="ngForm" [formGroup]="loginFormGroup" class="p-2">
 	        <div class="form-group">
 	        	 <mat-form-field class="example-full-width">
 	    			<input matInput placeholder="Login" [(ngModel)]="login" required formControlName="login">
