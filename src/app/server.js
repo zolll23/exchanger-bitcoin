@@ -94,16 +94,24 @@ app.post('/orders',function (request, response) {
 
 app.post('/login', function (request, response) {
     console.log(request.body);
-    console.log(request.body.login == 'admin');
-    console.log(request.body.password == 'admin_test');
-    let ret;
-    if (request.body != null && request.body.login == 'admin' && request.body.password == 'admin_test') {
-        const token = jwt.sign({ data: 'admin', expiresIn: "1h" }, 'admin_pass' );
-        ret = { success: true, token: token };
-    } else {
-        ret = { success: false };
-    }
-    response.send( JSON.stringify(ret) );
+    let ret = { success: false };
+    Admins.find({ login: request.body.login, password: request.body.password }, function(err, admins) {
+        console.log('--- select ---');
+        if (err) {
+            console.log(err);
+        } else {
+            const admin = admins.pop();
+            console.log(typeof admin);
+            console.log(admin);
+            if ( typeof admin == 'object' && admin.login !== undefined ) {
+                const token = jwt.sign({ data: 'admin', expiresIn: "1h" }, 'admin_pass' );
+                ret = { success: true, token: token };
+            }
+        }
+        console.log(ret);
+        response.send( JSON.stringify(ret) );
+        console.log('--- select ---');
+    });
 });
  
 app.listen(3000);

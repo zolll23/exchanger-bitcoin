@@ -19,7 +19,7 @@ export class AuthService {
         this.auth_token = null;
     }
 
-    set authenticated(token) {
+    set token(token: string) {
         this.auth_token = token;
     }
 }

@@ -27,7 +27,7 @@ export class AuthComponent {
         if (form.valid) {
             this.auth.authenticate(this.login, this.password).subscribe(response => {
                 if (response) {
-                    this.auth.authenticated = response.success ? response.token : null ;
+                    this.auth.token = response.success ? response.token : null ;
                     if (this.auth.authenticated) {
                         this.router.navigateByUrl('/admin/main');
                     } else {
@@ -35,7 +35,7 @@ export class AuthComponent {
                     }
                 } else {
                     console.log('Get auth data is failed');
-                    this.auth.authenticated = null;
+                    this.auth.token = null;
                 }
             });
         } else {

@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../Model/auth.service';
+import { RestDataSource } from '../Model/rest.datasource';
 
 import { MatButtonModule,
  MatCheckboxModule,
@@ -44,7 +46,8 @@ const routing = RouterModule.forChild([
     MatToolbarModule,
     MatStepperModule
     ],
-    declarations: [AuthComponent, AdminComponent]
+    declarations: [AuthComponent, AdminComponent],
+    providers: [ AuthService ]
 })
 
 export class AdminModule { }
