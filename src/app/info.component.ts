@@ -11,6 +11,7 @@ import { routerTransition } from './router.animations';
 
 @Component({
     templateUrl: 'info.component.html',
+    styleUrls: [ './../assets/site.css' ],
     animations: [routerTransition()]
 })
 

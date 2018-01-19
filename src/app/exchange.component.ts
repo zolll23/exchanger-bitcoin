@@ -14,6 +14,7 @@ declare var jQuery: any;
     selector: 'app-root',
     moduleId: module.id,
     templateUrl: './exchange.component.html',
+    styleUrls: [ './../assets/site.css' ],
     animations: [routerTransition()]
 })
 

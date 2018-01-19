@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../Model/auth.service';
 
+declare var jQuery: any;
+
 @Component({
     moduleId: module.id,
     templateUrl: 'auth.component.html',
-    styleUrls: ['./admin.css']
+    styleUrls: [ './../../assets/admin.css' ]
 })
 
-export class AuthComponent {
+export class AuthComponent implements AfterViewInit {
     public login: string;
     public password: string;
     public errorMessage: string;
     private loginFormGroup: FormGroup;
+
+    ngAfterViewInit() {
+        jQuery(document).ready(function() { jQuery('body').bootstrapMaterialDesign(); });
+    }
 
     constructor(private router: Router, private auth: AuthService) {
         this.loginFormGroup = new FormGroup({
