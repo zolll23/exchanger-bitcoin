@@ -2,49 +2,34 @@
   <span>Adminstration zone</span>
 </mat-toolbar>
 
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" href="#" routerLink="/admin/main">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#" routerLink="/admin/main">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#" routerLink="/admin/main">Another link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#" routerLink="/admin/main">Disabled</a>
-  </li>
-</ul>
+<!--nav class="navbar navbar-expand-lg navbar-light bg-light"-->
+<nav class="navbar navbar-expand-lg navbar-dark indigo">
 
-<!-- dark -->
-<ul class="nav nav-tabs bg-dark">
-  <li class="nav-item">
-    <a class="nav-link active" href="#" routerLink="/admin/main">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#" routerLink="/admin/main">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#" routerLink="/admin/main">Another link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#" routerLink="/admin/main">Disabled</a>
-  </li>
-</ul>
+  <a class="navbar-brand" href="#" routerLink="/">Site</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<!-- primary -->
-<ul class="nav nav-tabs bg-primary">
-  <li class="nav-item">
-    <a class="nav-link active" href="#" routerLink="/admin/main">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#" routerLink="/admin/main">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#" routerLink="/admin/main">Another link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#" routerLink="/admin/main">Disabled</a>
-  </li>
-</ul>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#" routerLink="/admin/main">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/admin/orders">Orders</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<mat-card>
+	<h1>Wecome to admin zone!</h1>
+	<p>
+		There you can view our demo text, in real site here can be manual for admin users.
+	</p>
+	<p>
+		For output all orders from this site, click on link "Orders" on top navigation menu.
+	</p>
+	<p>
+		Click on link "Site" for redirect to main zone of site.
+	</p>
+</mat-card>
